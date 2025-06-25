@@ -1,16 +1,16 @@
 'use client';
 import gsap from 'gsap';
 import Link from 'next/link';
-import { useRef } from 'react';
+import { Suspense, useRef } from 'react';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import { ScrollTrigger, SplitText } from 'gsap/all';
 import { useGSAP } from '@gsap/react';
 import { useMountStore } from '@/app/store';
-import { useGuestParams, useImageLoad } from '@/lib/hooks';
+import { useImageLoad } from '@/lib/hooks';
+import Guest from '../ui/Guest';
 
 export default function Splash() {
-    const guest = useGuestParams();
     const { isMount, setMount } = useMountStore();
     const { loading, setLoading } = useImageLoad();
     const container = useRef<HTMLDivElement>(null);
@@ -95,11 +95,13 @@ export default function Splash() {
                         Melyani
                     </h1>
                 </div>
-                {guest && (
-                    <p className='starting:opacity-0 transition-opacity duration-1000 text-lg'>
-                        Dear, <span className='font-medium'>{guest}</span>
-                    </p>
-                )}
+                <Suspense>
+                    <Guest
+                        as='p'
+                        className='starting:opacity-0 transition-opacity duration-1000 text-lg'
+                    />
+                </Suspense>
+
                 <div className='appear relative z-1'>
                     <button
                         onClick={(e) => {

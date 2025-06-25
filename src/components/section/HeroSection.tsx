@@ -1,15 +1,14 @@
-import Image from 'next/image';
-import { cn } from '@/lib/utils';
-import { useGuestParams } from '@/lib/hooks';
-import { useImageStore, useMountStore } from '@/app/store';
-import { useRef } from 'react';
-import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
+import Image from 'next/image';
+import Guest from '../ui/Guest';
+import { cn } from '@/lib/utils';
+import { useGSAP } from '@gsap/react';
+import { Suspense, useRef } from 'react';
 import { ScrollTrigger, SplitText } from 'gsap/all';
+import { useImageStore, useMountStore } from '@/app/store';
 
 export default function HeroSection() {
     const { isMount } = useMountStore();
-    const guest = useGuestParams();
     const { loading, setLoading } = useImageStore();
     const container = useRef<HTMLDivElement>(null);
 
@@ -67,7 +66,7 @@ export default function HeroSection() {
                 });
             });
         },
-        { dependencies: [isMount, guest], scope: container }
+        { dependencies: [isMount], scope: container }
     );
 
     return (
@@ -113,7 +112,9 @@ export default function HeroSection() {
                     </div>
                 </div>
                 <div className='text-center'>
-                    <h1 className='split'>{guest},</h1>
+                    <Suspense>
+                        <Guest as='h1' className='split' />
+                    </Suspense>
                     <p className='word'>You're invited to our wedding ceremony</p>
                 </div>
             </section>
