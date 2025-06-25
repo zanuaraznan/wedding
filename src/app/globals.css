@@ -1,26 +1,32 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+    --breakpoint-xl: 1140;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@utility container {
+    @apply mx-auto px-4;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@utility newsreader {
+    font-family: var(--newsreader);
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@custom-variant hover-active {
+    &:hover:active {
+        @slot;
+    }
+}
+
+button {
+    @apply cursor-pointer transition-transform transform hover-active:scale-90;
+}
+
+h1 {
+    @apply newsreader text-3xl;
+}
+
+.split,
+.appear {
+    @apply opacity-0;
 }
