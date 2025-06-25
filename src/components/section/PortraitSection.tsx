@@ -35,7 +35,6 @@ export default function PortraitSection() {
     const allImagesLoaded =
         imageUrls.length > 0 && loadedCount === imageUrls.length && !dataLoad;
 
-    // GSAP Animation after all images are loaded
     useGSAP(
         () => {
             if (!allImagesLoaded) return;
@@ -76,8 +75,6 @@ export default function PortraitSection() {
                         scrollTrigger: {
                             trigger: el,
                             start: 'top 90%',
-                            markers: true,
-                            toggleActions: 'restart none none none',
                         },
                     }
                 );
@@ -100,8 +97,8 @@ export default function PortraitSection() {
                                     key={id}
                                     src={url}
                                     alt={url.split('/').at(-1)!}
-                                    width={1200}
-                                    height={1200}
+                                    width={500}
+                                    height={500}
                                     onLoad={() => setLoadedCount((prev) => prev + 1)}
                                     className='appear w-full h-full aspect-auto object-cover rounded-2xl mb-4'
                                 />
